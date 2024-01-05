@@ -1,0 +1,54 @@
+.home-view {
+    max-width     : 600px;
+    margin        : 0 auto;
+    padding       : 20px;
+    padding-bottom: 100px;
+    display       : flex;
+    flex-direction: column;
+    gap           : 20px;
+
+    >.profile {
+        display    : flex;
+        align-items: center;
+        gap        : 12px;
+
+        >.profile-image {
+            width              : 100px;
+            height             : 100px;
+            -webkit-mask-image : url(/images/pfp-mask.png);
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size  : cover;
+            mask-image         : url(/images/pfp-mask.png);
+            mask-repeat        : no-repeat;
+            mask-size          : cover;
+        }
+
+        >.info {
+            display       : flex;
+            flex-direction: column;
+            gap           : 4px;
+
+            >h1 {
+                font-size: 24px;
+            }
+
+            >ul {
+                display       : flex;
+                flex-direction: column;
+                gap           : 4px;
+            }
+        }
+    }
+
+    >section {
+        display       : flex;
+        flex-direction: column;
+        gap           : 12px;
+
+        >section {
+            border       : 1px solid #ccc;
+            padding      : 12px;
+            border-radius: 12px;
+        }
+    }
+}
