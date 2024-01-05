@@ -546,9 +546,30 @@ body {
   flex-direction: column;
   gap: 12px;
 }
+.home-view > section > h2 {
+  color: #666;
+}
 .home-view > section > section {
   border: 1px solid #ccc;
   padding: 12px;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-view > section > section > .org {
+  font-size: 18px;
+  color: #999;
+}
+.home-view > section > section > .org > a {
+  color: #00c3ff;
+  text-decoration: underline;
+}
+.home-view > section > section > .titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: square;
+  margin-left: 16px;
 }
 

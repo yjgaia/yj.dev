@@ -34,28 +34,60 @@ export default class HomeView extends StaticDomNode {
         el("h2", "Experience"),
         el(
           "section",
-          el(".org", "Gaia Protocol"),
-          el(".title", "Director", el("span.date", " (2022.02 ~ )")),
+          el(
+            ".org",
+            el("a", "Gaia Protocol", {
+              href: "https://gaiaprotocol.com",
+              target: "_blank",
+            }),
+          ),
+          el(
+            "ul.titles",
+            el("li", "Director", el("span.date", " (2022.02 ~ )")),
+          ),
         ),
         el(
           "section",
-          el(".org", "Doge Sound Club"),
           el(
-            ".title",
-            "Developer & Community Manager",
-            el("span.date", " (2021.07 ~ 2022.02)"),
+            ".org",
+            el("a", "Doge Sound Club", {
+              href: "https://dogesound.club",
+              target: "_blank",
+            }),
           ),
-          el(".title", "Technical Support", el("span.date", " (2022.02 ~ )")),
+          el(
+            "ul.titles",
+            el(
+              "li",
+              "Developer & Community Manager",
+              el("span.date", " (2021.07 ~ 2022.02)"),
+            ),
+            el("li", "Technical Support", el("span.date", " (2022.02 ~ )")),
+          ),
         ),
         el(
           "section",
           el(".org", "ELM Systems"),
-          el(".title", "CTO", el("span.date", " (2020.01 ~ 2021.06)")),
+          el(
+            "ul.titles",
+            el(
+              "li",
+              "CTO",
+              el("span.date", " (2020.01 ~ 2021.06)"),
+            ),
+          ),
         ),
         el(
           "section",
           el(".org", "BTNcafe (Mobile Game Company)"),
-          el(".title", "CEO", el("span.date", " (2012.09 ~ 2019.11)")),
+          el(
+            "ul.titles",
+            el(
+              "li",
+              "Director",
+              el("span.date", " (2012.09 ~ 2019.11)"),
+            ),
+          ),
         ),
       ),
       el(
@@ -63,17 +95,39 @@ export default class HomeView extends StaticDomNode {
         el("h2", "And more..."),
         el(
           "section",
-          el(".org", "Sigor"),
           el(
-            ".title",
-            "Chief (a.k.a. Injeolmi Papa)",
-            el("span.date", " (2021.11 ~ )"),
+            ".org",
+            el("a", "Sigor", {
+              href: "https://sigor.com",
+              target: "_blank",
+            }),
+          ),
+          el(
+            "ul.titles",
+            el(
+              "li",
+              "Chief (a.k.a. Injeolmi Papa)",
+              el("span.date", " (2021.11 ~ )"),
+            ),
           ),
         ),
         el(
           "section",
-          el(".org", "MateDAO"),
-          el(".title", "Builder", el("span.date", " (2024.01 ~ )")),
+          el(
+            ".org",
+            el("a", "MateDAO", {
+              href: "https://matedao.org",
+              target: "_blank",
+            }),
+          ),
+          el(
+            "ul.titles",
+            el(
+              "li",
+              "Builder",
+              el("span.date", " (2024.01 ~ )"),
+            ),
+          ),
         ),
       ),
     );
