@@ -62,7 +62,7 @@ export default class HomeView extends StaticDomNode {
               "Developer & Community Manager",
               el("span.date", " (2021.07 ~ 2022.02)"),
             ),
-            el("li", "Technical Support", el("span.date", " (2022.02 ~ )")),
+            el("li", "Technical Advisor", el("span.date", " (2022.02 ~ )")),
           ),
         ),
         el(
