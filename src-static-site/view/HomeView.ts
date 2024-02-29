@@ -41,6 +41,7 @@ export default class HomeView extends StaticDomNode {
               target: "_blank",
             }),
           ),
+          el("p", "Web3 Social Protocol"),
           el(
             "ul.titles",
             el("li", "Director", el("span.date", " (2022.02 ~ )")),
@@ -55,6 +56,7 @@ export default class HomeView extends StaticDomNode {
               target: "_blank",
             }),
           ),
+          el("p", "The First PFP Project in Korea"),
           el(
             "ul.titles",
             el(
@@ -79,7 +81,8 @@ export default class HomeView extends StaticDomNode {
         ),
         el(
           "section",
-          el(".org", "BTNcafe (Mobile Game Company)"),
+          el(".org", "BTNcafe"),
+          el("p", "Mobile Game Company"),
           el(
             "ul.titles",
             el(
@@ -102,6 +105,7 @@ export default class HomeView extends StaticDomNode {
               target: "_blank",
             }),
           ),
+          el("p", "Rural 2D Metaverse"),
           el(
             "ul.titles",
             el(
@@ -120,6 +124,7 @@ export default class HomeView extends StaticDomNode {
               target: "_blank",
             }),
           ),
+          el("p", "DAO for Mate Holders"),
           el(
             "ul.titles",
             el(

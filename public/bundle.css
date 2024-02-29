@@ -98,6 +98,37 @@ meter {
 :where(dialog:modal) {
     all: revert;
 }
+:root {
+  --page-bg-color: #121212;
+  --page-text-color: #fff;
+  --button-hover-color: rgba(193, 168, 125, 0.2);
+  --contained-button-hover-color: #C1A87D;
+  --button-outline-color: rgba(193, 168, 125, 0.5);
+  --button-outline-hover-color: #C1A87D;
+  /* old
+    --page-bg-color   : #121212;
+    --content-bg-color: #141414;
+    --panel-bg-color  : #1E1E1E;
+    --popup-bg-color  : rgba(0, 0, 0, 0.5);
+    --text-color      : #fff;
+    --line-color      : #252527;
+
+    --primary-color  : #C1A87D;
+    --secondary-color: #fff;
+
+    --error-color        : #FF0000;
+    --warning-color      : #FFA500;
+    --warning-bg-color   : rgba(255, 165, 0, 0.12);
+    --success-color      : #00FF00;
+    --empty-message-color: #b4c2d3;
+
+    --hover-color  : rgba(193, 168, 125, 0.2);
+    --disable-color: rgba(255, 255, 255, 0.5);
+
+    --loading-bar-bg-color: rgba(193, 168, 125, 0.1);
+    --loading-bar-color   : rgba(193, 168, 125, 0.5);
+    */
+}
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -113,25 +144,10 @@ meter {
   src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAw.ttf) format('truetype');
 }
 :root {
-  --wrapper-bg-color: #121212;
-  --content-bg-color: #141414;
-  --text-color: #fff;
-  --line-color: #252527;
-  --primary-color: #C1A87D;
-  --error-color: #FF0000;
-  --warning-color: #FFA500;
-  --warning-bg-color: rgba(255, 165, 0, 0.12);
-  --success-color: #00FF00;
-  --popup-bg-color: rgba(0, 0, 0, 0.5);
-  --button-bg-color: rgba(193, 168, 125, 0.12);
-  --hover-color: rgba(193, 168, 125, 0.12);
-  --disable-color: rgba(255, 255, 255, 0.5);
-  --loading-bar-bg-color: rgba(193, 168, 125, 0.1);
-  --loading-bar-color: rgba(193, 168, 125, 0.5);
   width: 100%;
   height: 100%;
-  background-color: var(--wrapper-bg-color);
-  color: var(--text-color);
+  background-color: var(--page-bg-color);
+  color: var(--page-text-color);
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
 }
@@ -164,27 +180,61 @@ button {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 24;
 }
+.avatar {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #252527;
+  background-size: cover;
+}
+:root {
+  --button-text-color: var(--primary-color);
+  --button-hover-color: rgba(193, 168, 125, 0.2);
+  --contained-button-bg-color: var(--primary-color);
+  --contained-button-text-color: #000;
+  --contained-button-hover-bg-color: #C1A87D;
+  --outlined-button-line-color: var(--primary-color);
+  --outlined-button-bg-color: transparent;
+  --outlined-button-text-color: var(--button-text-color);
+  --outlined-button-hover-bg-color: var(--button-hover-color);
+  --outlined-button-hover-line-color: var(--primary-color);
+}
 button.component {
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
-  color: var(--primary-color);
+  border-radius: 6px;
   line-height: 1em;
   gap: 8px;
+  text-transform: capitalize;
+  color: var(--button-text-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+button.component:hover {
+  background-color: var(--button-hover-color);
+}
+button.component.contained {
+  background-color: var(--contained-button-bg-color);
+  color: var(--contained-button-text-color);
+}
+button.component.contained:hover {
+  background-color: var(--contained-button-hover-bg-color);
+}
+button.component.outlined {
+  border: 1px solid var(--outlined-button-line-color);
+  background-color: var(--outlined-button-bg-color);
+  color: var(--outlined-button-text-color);
+}
+button.component.outlined:hover {
+  background-color: var(--outlined-button-hover-bg-color);
+  border-color: var(--outlined-button-hover-line-color);
 }
 button.component.disabled {
   cursor: not-allowed;
   filter: grayscale(1);
-}
-button.component.contained {
-  border: 1px solid var(--primary-color);
-  border-radius: 6px;
-  background-color: var(--button-bg-color);
-}
-button.component > .title {
-  text-transform: capitalize;
 }
 .nav-bar.component {
   position: fixed;
@@ -193,7 +243,6 @@ button.component > .title {
   z-index: 999990;
   width: 90px;
   height: 100%;
-  background-color: var(--wrapper-bg-color);
   border-right: 1px solid var(--line-color);
   display: flex;
   flex-direction: column;
@@ -208,19 +257,19 @@ button.component > .title {
     top: auto;
     bottom: 0;
     width: 100%;
-    height: calc(90px + env(safe-area-inset-bottom));
-    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    height: calc(80px + env(safe-area-inset-bottom));
+    padding-bottom: calc(4px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--line-color);
     border-right: none;
     flex-direction: row;
     justify-content: space-between;
     gap: 0;
-    padding-bottom: 0;
     overflow-y: visible;
   }
   .nav-bar.component::before,
   .nav-bar.component::after {
     content: '';
+    margin: 0 -1%;
   }
 }
 .nav-bar.component > h1.logo {
@@ -241,9 +290,15 @@ button.component > .title {
   gap: 4px;
   align-items: center;
   font-size: 12px;
+  color: var(--secondary-color);
 }
 .nav-bar.component > a.menu > .icon {
   font-size: 42px;
+}
+@container (width < 1280px) {
+  .nav-bar.component > a.menu > .icon {
+    font-size: 36px;
+  }
 }
 .nav-bar.component > a.menu.active {
   color: var(--primary-color);
@@ -306,6 +361,85 @@ button.component > .title {
   padding: 24px;
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
+}
+.adaptive-modal-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999998;
+  width: 100%;
+  height: 100%;
+  background-color: var(--popup-bg-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 20px 0;
+}
+@container (width < 1280px) {
+  .adaptive-modal-background {
+    padding: 0;
+  }
+}
+.adaptive-modal.component {
+  max-width: 614px;
+  width: 90%;
+  margin: auto;
+  border: 1px solid var(--line-color);
+  border-radius: 16px;
+  background-color: var(--content-bg-color);
+}
+@container (width < 1280px) {
+  .adaptive-modal.component {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+}
+.adaptive-modal.component > header {
+  display: flex;
+  align-items: center;
+  padding: 24px;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > header {
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--line-color);
+  }
+}
+.adaptive-modal.component > header > button.back {
+  display: none;
+}
+.adaptive-modal.component > header > h1 {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > header > button.back {
+    display: block;
+  }
+  .adaptive-modal.component > header > button.close {
+    display: none;
+  }
+}
+.adaptive-modal.component > main {
+  padding: 0 24px;
+}
+.adaptive-modal.component > footer {
+  padding: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > footer {
+    display: none;
+  }
 }
 @keyframes loading-spinner-animation {
   0% {
@@ -410,6 +544,12 @@ button.component > .title {
   display: flex;
   gap: 40px;
   padding: 10px 20px 0;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs.component::-webkit-scrollbar {
+  display: none;
 }
 .tabs.component > .tab {
   cursor: pointer;
@@ -418,6 +558,7 @@ button.component > .title {
   align-items: center;
   border-bottom: 3px solid transparent;
   padding: 0 10px;
+  white-space: nowrap;
 }
 .tabs.component > .tab:hover {
   color: var(--primary-color);
@@ -425,6 +566,88 @@ button.component > .title {
 .tabs.component > .tab.active {
   color: var(--primary-color);
   border-bottom: 3px solid var(--primary-color);
+}
+@keyframes show-drawer {
+  from {
+    opacity: 0;
+    right: -40px;
+  }
+  to {
+    opacity: 1;
+    right: 0;
+  }
+}
+@keyframes hide-drawer {
+  from {
+    opacity: 1;
+    right: 0;
+  }
+  to {
+    opacity: 0;
+    right: -40px;
+  }
+}
+@keyframes show-drawer-mobile {
+  from {
+    opacity: 0;
+    bottom: -40px;
+  }
+  to {
+    opacity: 1;
+    bottom: 0;
+  }
+}
+@keyframes hide-drawer-mobile {
+  from {
+    opacity: 1;
+    bottom: 0;
+  }
+  to {
+    opacity: 0;
+    bottom: -40px;
+  }
+}
+.drawer-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999998;
+  width: 100%;
+  height: 100%;
+  background-color: var(--popup-bg-color);
+}
+.drawer.component {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  max-width: 360px;
+  height: 100%;
+  border-left: 1px solid var(--line-color);
+  background-color: var(--content-bg-color);
+  overflow-y: auto;
+  padding-bottom: 120px;
+  container-type: inline-size;
+  animation: show-drawer 0.3s ease-out;
+}
+@container (width < 1280px) {
+  .drawer.component {
+    width: 100%;
+    max-width: 100%;
+    height: 80%;
+    top: auto;
+    bottom: 0;
+    border-radius: 16px 16px 0 0;
+    animation: show-drawer-mobile 0.3s ease-out;
+  }
+}
+.drawer.component.hide {
+  animation: hide-drawer 0.3s ease-out forwards;
+}
+@container (width < 1280px) {
+  .drawer.component.hide {
+    animation: hide-drawer-mobile 0.3s ease-out forwards;
+  }
 }
 .input.component {
   display: flex;
@@ -478,6 +701,7 @@ button.component > .title {
 .select.component > .option-container > .option {
   padding: 8px 12px;
   text-transform: capitalize;
+  cursor: pointer;
 }
 .select.component > .option-container > .option:hover {
   background-color: var(--primary-color);
@@ -489,11 +713,16 @@ button.component > .title {
   display: block;
 }
 .checkbox.component {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.checkbox.component > .checkmark-container {
   position: relative;
   height: 27px;
   width: 27px;
 }
-.checkbox.component > .checkmark {
+.checkbox.component > .checkmark-container > .checkmark {
   position: absolute;
   top: 0;
   left: 0;
@@ -502,7 +731,7 @@ button.component > .title {
   border: 1px solid var(--primary-color);
   border-radius: 50%;
 }
-.checkbox.component > .checkmark:after {
+.checkbox.component > .checkmark-container > .checkmark:after {
   display: none;
   content: "";
   position: absolute;
@@ -516,11 +745,14 @@ button.component > .title {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.checkbox.component > input:checked ~ .checkmark {
+.checkbox.component > .checkmark-container > input:checked ~ .checkmark {
   background-color: #fff;
 }
-.checkbox.component > input:checked ~ .checkmark:after {
+.checkbox.component > .checkmark-container > input:checked ~ .checkmark:after {
   display: block;
+}
+.checkbox.component > label {
+  cursor: default;
 }
 .file-drop-area.component.highlight {
   outline: 2px dotted var(--primary-color);
@@ -542,6 +774,7 @@ button.component > .title {
 .rich-display.component > .image-container > a > .image-loading-animation {
   border-radius: 12px;
   overflow: hidden;
+  max-height: 320px;
 }
 .error-alert.component > main > p {
   word-break: break-all;
@@ -556,6 +789,9 @@ button.component > .title {
 }
 .warning-message-box.component > i {
   font-size: 24px;
+}
+.warning-message-box.component > p > a {
+  text-decoration: underline;
 }
 body {
   overflow: auto;
@@ -620,6 +856,9 @@ body {
 .home-view > section > section > .org > a {
   color: #00c3ff;
   text-decoration: underline;
+}
+.home-view > section > section > p {
+  color: #999;
 }
 .home-view > section > section > .titles {
   display: flex;
