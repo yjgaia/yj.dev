@@ -99,12 +99,13 @@ meter {
     all: revert;
 }
 :root {
+  --primary-color: #C1A87D;
+  --line-color: #252527;
   --page-bg-color: #121212;
-  --page-text-color: #fff;
-  --button-hover-color: rgba(193, 168, 125, 0.2);
-  --contained-button-hover-color: #C1A87D;
-  --button-outline-color: rgba(193, 168, 125, 0.5);
-  --button-outline-hover-color: #C1A87D;
+  --title-text-color: #fff;
+  --paragraph-text-color: #b4c2d3;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+  --modal-bg-color: #1E1E1E;
   /* old
     --page-bg-color   : #121212;
     --content-bg-color: #141414;
@@ -147,15 +148,23 @@ meter {
   width: 100%;
   height: 100%;
   background-color: var(--page-bg-color);
-  color: var(--page-text-color);
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
 }
 body {
   width: 100%;
   height: 100%;
   overflow: hidden;
   container-type: inline-size;
+  color: var(--paragraph-text-color);
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--title-text-color);
 }
 p {
   line-height: 1.6em;
@@ -193,8 +202,8 @@ button {
   --button-hover-color: rgba(193, 168, 125, 0.2);
   --contained-button-bg-color: var(--primary-color);
   --contained-button-text-color: #000;
-  --contained-button-hover-bg-color: #C1A87D;
-  --outlined-button-line-color: var(--primary-color);
+  --contained-button-hover-bg-color: #8e6d34;
+  --outlined-button-line-color: rgba(193, 168, 125, 0.5);
   --outlined-button-bg-color: transparent;
   --outlined-button-text-color: var(--button-text-color);
   --outlined-button-hover-bg-color: var(--button-hover-color);
@@ -213,7 +222,7 @@ button.component {
   color: var(--button-text-color);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-button.component:hover {
+button.component:hover:not(.disabled) {
   background-color: var(--button-hover-color);
 }
 button.component.contained {
@@ -231,6 +240,10 @@ button.component.outlined {
 button.component.outlined:hover {
   background-color: var(--outlined-button-hover-bg-color);
   border-color: var(--outlined-button-hover-line-color);
+}
+button.component.circle {
+  padding: 8px;
+  border-radius: 50%;
 }
 button.component.disabled {
   cursor: not-allowed;
@@ -318,128 +331,6 @@ button.component.disabled {
 .splash-screen.component > img {
   max-width: 120px;
   max-height: 120px;
-}
-.popup-background {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 999998;
-  width: 100%;
-  height: 100%;
-  background-color: var(--popup-bg-color);
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  padding: 20px 0;
-}
-.popup.component {
-  max-width: 614px;
-  width: 90%;
-  margin: auto;
-  border: 1px solid var(--line-color);
-  border-radius: 16px;
-  background-color: var(--content-bg-color);
-}
-.popup.component > header {
-  display: flex;
-  align-items: center;
-  padding: 24px;
-}
-.popup.component > header > h1 {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-.popup.component > main {
-  padding: 0 24px;
-}
-.popup.component > footer {
-  padding: 24px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-.adaptive-modal-background {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 999998;
-  width: 100%;
-  height: 100%;
-  background-color: var(--popup-bg-color);
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  padding: 20px 0;
-}
-@container (width < 1280px) {
-  .adaptive-modal-background {
-    padding: 0;
-  }
-}
-.adaptive-modal.component {
-  max-width: 614px;
-  width: 90%;
-  margin: auto;
-  border: 1px solid var(--line-color);
-  border-radius: 16px;
-  background-color: var(--content-bg-color);
-}
-@container (width < 1280px) {
-  .adaptive-modal.component {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-}
-.adaptive-modal.component > header {
-  display: flex;
-  align-items: center;
-  padding: 24px;
-}
-@container (width < 1280px) {
-  .adaptive-modal.component > header {
-    padding: 16px 12px;
-    border-bottom: 1px solid var(--line-color);
-  }
-}
-.adaptive-modal.component > header > button.back {
-  display: none;
-}
-.adaptive-modal.component > header > h1 {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-@container (width < 1280px) {
-  .adaptive-modal.component > header > button.back {
-    display: block;
-  }
-  .adaptive-modal.component > header > button.close {
-    display: none;
-  }
-}
-.adaptive-modal.component > main {
-  padding: 0 24px;
-}
-.adaptive-modal.component > footer {
-  padding: 24px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-@container (width < 1280px) {
-  .adaptive-modal.component > footer {
-    display: none;
-  }
 }
 @keyframes loading-spinner-animation {
   0% {
@@ -542,16 +433,36 @@ button.component.disabled {
 .tabs.component {
   border-bottom: 1px solid var(--line-color);
   display: flex;
-  gap: 40px;
-  padding: 10px 20px 0;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 10px;
 }
-.tabs.component::-webkit-scrollbar {
+.tabs.component > button.prev {
+  flex-shrink: 0;
+}
+.tabs.component > button.next {
+  flex-shrink: 0;
+}
+.tabs.component:not(.scrollable) > button.prev {
   display: none;
 }
-.tabs.component > .tab {
+.tabs.component:not(.scrollable) > button.next {
+  display: none;
+}
+.tabs.component > ul {
+  flex-grow: 1;
+  display: flex;
+  gap: 40px;
+  padding: 10px 10px 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs.component > ul::-webkit-scrollbar {
+  display: none;
+}
+.tabs.component > ul > .tab {
   cursor: pointer;
   min-height: 48px;
   display: flex;
@@ -560,12 +471,80 @@ button.component.disabled {
   padding: 0 10px;
   white-space: nowrap;
 }
-.tabs.component > .tab:hover {
+.tabs.component > ul > .tab:hover {
   color: var(--primary-color);
 }
-.tabs.component > .tab.active {
+.tabs.component > ul > .tab.active {
   color: var(--primary-color);
   border-bottom: 3px solid var(--primary-color);
+}
+.exitable {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999998;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-color);
+}
+@keyframes show-popup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hide-popup {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.popup-overlay {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 20px 0;
+}
+@container (width < 1280px) {
+  .popup-overlay {
+    padding: 0;
+  }
+}
+.popup.component {
+  width: 90%;
+  max-width: 614px;
+  margin: auto;
+  border: 1px solid var(--line-color);
+  border-radius: 16px;
+  background-color: var(--modal-bg-color);
+  display: flex;
+  flex-direction: column;
+  animation: show-popup 0.3s ease-out;
+}
+.popup.component.hide {
+  animation: hide-popup 0.3s ease-out forwards;
+}
+.popup.component > header {
+  flex-shrink: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.popup.component > main {
+  container-type: inline-size;
+}
+.popup.component > footer {
+  flex-shrink: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 12px;
 }
 @keyframes show-drawer {
   from {
@@ -607,15 +586,6 @@ button.component.disabled {
     bottom: -40px;
   }
 }
-.drawer-background {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 999998;
-  width: 100%;
-  height: 100%;
-  background-color: var(--popup-bg-color);
-}
 .drawer.component {
   position: absolute;
   right: 0;
@@ -624,7 +594,7 @@ button.component.disabled {
   max-width: 360px;
   height: 100%;
   border-left: 1px solid var(--line-color);
-  background-color: var(--content-bg-color);
+  background-color: var(--modal-bg-color);
   overflow-y: auto;
   padding-bottom: 120px;
   container-type: inline-size;
@@ -647,6 +617,135 @@ button.component.disabled {
 @container (width < 1280px) {
   .drawer.component.hide {
     animation: hide-drawer-mobile 0.3s ease-out forwards;
+  }
+}
+@keyframes show-adaptive-modal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes hide-adaptive-modal {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes show-adaptive-modal-mobile {
+  from {
+    opacity: 0;
+    margin-right: -40px;
+  }
+  to {
+    opacity: 1;
+    margin-right: 0;
+  }
+}
+@keyframes hide-adaptive-modal-mobile {
+  from {
+    opacity: 1;
+    margin-right: 0;
+  }
+  to {
+    opacity: 0;
+    margin-right: -40px;
+  }
+}
+:root {
+  --adaptive-modal-content-bg-color: var(--modal-bg-color);
+}
+.adaptive-modal-overlay {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+@container (width < 1280px) {
+  .adaptive-modal-overlay {
+    padding: 0;
+  }
+}
+.adaptive-modal.component {
+  width: 90%;
+  max-width: 614px;
+  max-height: 90%;
+  margin: auto;
+  border: 1px solid var(--line-color);
+  border-radius: 16px;
+  background-color: var(--modal-bg-color);
+  display: flex;
+  flex-direction: column;
+  animation: show-adaptive-modal 0.3s ease-out;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border: none;
+    border-radius: 0;
+    animation: show-adaptive-modal-mobile 0.3s ease-out;
+  }
+}
+.adaptive-modal.component.hide {
+  animation: hide-adaptive-modal 0.3s ease-out forwards;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component.hide {
+    animation: hide-adaptive-modal-mobile 0.3s ease-out forwards;
+  }
+}
+.adaptive-modal.component > header {
+  flex-shrink: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+.adaptive-modal.component > header > button.back {
+  display: none;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > header {
+    border-radius: 0;
+  }
+  .adaptive-modal.component > header > button.back {
+    display: flex;
+  }
+  .adaptive-modal.component > header > button.close {
+    display: none;
+  }
+}
+.adaptive-modal.component > header > .title {
+  flex-grow: 1;
+  padding-left: 12px;
+}
+.adaptive-modal.component > main {
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: var(--adaptive-modal-content-bg-color);
+  container-type: inline-size;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > main {
+    border-radius: 0;
+  }
+}
+.adaptive-modal.component > footer {
+  flex-shrink: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 12px;
+}
+@container (width < 1280px) {
+  .adaptive-modal.component > footer {
+    display: none;
   }
 }
 .input.component {
@@ -776,7 +875,60 @@ button.component.disabled {
   overflow: hidden;
   max-height: 320px;
 }
+.alert.component > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.alert.component > main {
+  padding: 0 20px;
+}
+.alert.component > main > p {
+  word-break: break-all;
+}
+.error-alert.component > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.error-alert.component > main {
+  padding: 0 20px;
+}
 .error-alert.component > main > p {
+  word-break: break-all;
+}
+.confirm.component > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.confirm.component > main {
+  padding: 0 20px;
+}
+.confirm.component > main > p {
+  word-break: break-all;
+}
+.prompt.component > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.prompt.component > main {
+  padding: 0 20px;
+}
+.prompt.component > main > p {
   word-break: break-all;
 }
 .warning-message-box.component {
