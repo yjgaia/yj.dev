@@ -101,9 +101,12 @@ meter {
 :root {
   --primary-color: #C1A87D;
   --line-color: #252527;
+  --placeholder-color: rgba(255, 255, 255, 0.5);
   --page-bg-color: #121212;
   --title-text-color: #fff;
   --paragraph-text-color: #b4c2d3;
+  --sub-text-color: #8e8e8e;
+  --page-font-size: 14px;
   --overlay-color: rgba(0, 0, 0, 0.5);
   --modal-bg-color: #1E1E1E;
   /* old
@@ -125,9 +128,6 @@ meter {
 
     --hover-color  : rgba(193, 168, 125, 0.2);
     --disable-color: rgba(255, 255, 255, 0.5);
-
-    --loading-bar-bg-color: rgba(193, 168, 125, 0.1);
-    --loading-bar-color   : rgba(193, 168, 125, 0.5);
     */
 }
 @font-face {
@@ -156,7 +156,7 @@ body {
   container-type: inline-size;
   color: var(--paragraph-text-color);
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: var(--page-font-size);
 }
 h1,
 h2,
@@ -179,7 +179,7 @@ button {
   cursor: pointer;
 }
 ::placeholder {
-  color: var(--disable-color);
+  color: var(--placeholder-color);
 }
 .clearfix::after {
   content: '';
@@ -196,6 +196,22 @@ button {
   border-radius: 50%;
   background-color: #252527;
   background-size: cover;
+}
+.avatar.loading {
+  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 8%, rgba(255, 255, 255, 0.3) 18%, rgba(255, 255, 255, 0.1) 33%);
+  background-size: 120px 100%;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: loading-content-animation;
+  animation-timing-function: linear;
+}
+.activatable.component {
+  display: none;
+}
+.activatable.component.active {
+  display: block;
 }
 :root {
   --button-text-color: var(--primary-color);
@@ -221,15 +237,26 @@ button.component {
   text-transform: capitalize;
   color: var(--button-text-color);
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  white-space: nowrap;
 }
-button.component:hover:not(.disabled) {
+@media (pointer: fine) {
+  button.component:hover:not(.disabled) {
+    background-color: var(--button-hover-color);
+  }
+}
+button.component:active:not(.disabled) {
   background-color: var(--button-hover-color);
 }
 button.component.contained {
   background-color: var(--contained-button-bg-color);
   color: var(--contained-button-text-color);
 }
-button.component.contained:hover {
+@media (pointer: fine) {
+  button.component.contained:hover {
+    background-color: var(--contained-button-hover-bg-color);
+  }
+}
+button.component.contained:active {
   background-color: var(--contained-button-hover-bg-color);
 }
 button.component.outlined {
@@ -237,7 +264,13 @@ button.component.outlined {
   background-color: var(--outlined-button-bg-color);
   color: var(--outlined-button-text-color);
 }
-button.component.outlined:hover {
+@media (pointer: fine) {
+  button.component.outlined:hover {
+    background-color: var(--outlined-button-hover-bg-color);
+    border-color: var(--outlined-button-hover-line-color);
+  }
+}
+button.component.outlined:active {
   background-color: var(--outlined-button-hover-bg-color);
   border-color: var(--outlined-button-hover-line-color);
 }
@@ -332,58 +365,17 @@ button.component.disabled {
   max-width: 120px;
   max-height: 120px;
 }
-@keyframes loading-spinner-animation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.loading-spinner.component:after {
-  content: " ";
-  display: block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--text-color);
-  border-color: var(--text-color) transparent var(--text-color) transparent;
-  animation: loading-spinner-animation 1.2s linear infinite;
-}
-@keyframes list-loading-bar-loading {
-  0% {
-    left: -50%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-.list-loading-bar.component {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--loading-bar-bg-color);
-  z-index: 999997;
-  overflow: hidden;
-}
-.list-loading-bar.component::before {
-  content: '';
-  position: absolute;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background-color: var(--loading-bar-color);
-  animation: list-loading-bar-loading 2s linear infinite;
+:root {
+  --dropdown-menu-color: var(--page-bg-color);
+  --dropdown-menu-border-color: var(--line-color);
 }
 .dropdown-menu.component {
   position: fixed;
   z-index: 999998;
-  border: 1px solid var(--primary-color);
+  background-color: var(--dropdown-menu-color);
+  border: 1px solid var(--dropdown-menu-border-color);
   border-radius: 6px;
-  background-color: var(--content-bg-color);
-  min-width: 120px;
+  min-width: 160px;
   overflow: hidden;
 }
 .dropdown-menu.component > ul {
@@ -399,9 +391,15 @@ button.component.disabled {
   justify-content: flex-start;
   gap: 8px;
   width: 100%;
+  white-space: nowrap;
 }
-.dropdown-menu.component > ul > li > button:hover {
-  background-color: var(--primary-color);
+@media (pointer: fine) {
+  .dropdown-menu.component > ul > li > button:hover {
+    background-color: var(--button-hover-color);
+  }
+}
+.dropdown-menu.component > ul > li > button:active {
+  background-color: var(--button-hover-color);
 }
 .snackbar.component {
   position: fixed;
@@ -471,12 +469,124 @@ button.component.disabled {
   padding: 0 10px;
   white-space: nowrap;
 }
-.tabs.component > ul > .tab:hover {
+@media (pointer: fine) {
+  .tabs.component > ul > .tab:hover {
+    color: var(--primary-color);
+  }
+}
+.tabs.component > ul > .tab:active {
   color: var(--primary-color);
 }
 .tabs.component > ul > .tab.active {
   color: var(--primary-color);
   border-bottom: 3px solid var(--primary-color);
+}
+.bottom-menu-tabs.component {
+  width: 100%;
+  height: calc(50px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--line-color);
+  border-right: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-y: visible;
+}
+.bottom-menu-tabs.component::before,
+.bottom-menu-tabs.component::after {
+  content: '';
+  margin: 0 -4%;
+}
+.bottom-menu-tabs.component > .tab {
+  cursor: pointer;
+}
+.bottom-menu-tabs.component > .tab > .icon {
+  font-size: 30px;
+}
+.bottom-menu-tabs.component > .tab.active {
+  color: var(--primary-color);
+}
+.lazy-loading-component.hidden {
+  display: none;
+}
+@keyframes loading-spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+:root {
+  --loading-spinner-color: var(--paragraph-text-color);
+}
+.loading-spinner.component:after {
+  content: " ";
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--loading-spinner-color);
+  border-color: var(--loading-spinner-color) transparent var(--loading-spinner-color) transparent;
+  animation: loading-spinner-animation 1.2s linear infinite;
+}
+@keyframes loading-content-animation {
+  0% {
+    background-position: -120px 0;
+  }
+  100% {
+    background-position: 120px 0;
+  }
+}
+.loading-content.component:after {
+  content: " ";
+  display: block;
+  width: 60px;
+  min-height: 16px;
+  height: 100%;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 8%, rgba(255, 255, 255, 0.3) 18%, rgba(255, 255, 255, 0.1) 33%);
+  background-size: 120px 100%;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: loading-content-animation;
+  animation-timing-function: linear;
+}
+@keyframes list-loading-bar-loading {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+:root {
+  --list-loading-bar-bg-color: rgba(193, 168, 125, 0.1);
+  --list-loading-bar-color: rgba(193, 168, 125, 0.5);
+}
+:has(> .list-loading-bar.component) {
+  position: relative;
+}
+.list-loading-bar.component {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--list-loading-bar-bg-color);
+  z-index: 999997;
+  overflow: hidden;
+}
+.list-loading-bar.component::before {
+  content: '';
+  position: absolute;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background-color: var(--list-loading-bar-color);
+  animation: list-loading-bar-loading 2s linear infinite;
 }
 .exitable {
   position: fixed;
@@ -509,11 +619,6 @@ button.component.disabled {
   overflow-y: scroll;
   padding: 20px 0;
 }
-@container (width < 1280px) {
-  .popup-overlay {
-    padding: 0;
-  }
-}
 .popup.component {
   width: 90%;
   max-width: 614px;
@@ -544,6 +649,7 @@ button.component.disabled {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 8px;
   padding: 0 12px;
 }
 @keyframes show-drawer {
@@ -705,6 +811,7 @@ button.component.disabled {
   display: flex;
   align-items: center;
   padding: 0 12px;
+  border-bottom: 1px solid var(--line-color);
 }
 .adaptive-modal.component > header > button.back {
   display: none;
@@ -742,22 +849,29 @@ button.component.disabled {
   align-items: center;
   justify-content: flex-end;
   padding: 0 12px;
+  border-top: 1px solid var(--line-color);
 }
 @container (width < 1280px) {
   .adaptive-modal.component > footer {
     display: none;
   }
 }
+:root {
+  --input-border-color: var(--line-color);
+  --input-bg-color: var(--page-bg-color);
+}
 .input.component {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  font-size: 12px;
 }
 .input.component > textarea,
 .input.component > input {
+  font-size: var(--page-font-size);
   width: 100%;
-  border: 1px solid var(--line-color);
-  background-color: var(--content-bg-color);
+  border: 1px solid var(--input-border-color);
+  background-color: var(--input-bg-color);
   padding: 8px 12px;
   border-radius: 6px;
 }
@@ -802,7 +916,12 @@ button.component.disabled {
   text-transform: capitalize;
   cursor: pointer;
 }
-.select.component > .option-container > .option:hover {
+@media (pointer: fine) {
+  .select.component > .option-container > .option:hover {
+    background-color: var(--primary-color);
+  }
+}
+.select.component > .option-container > .option:active {
   background-color: var(--primary-color);
 }
 .select.component.open > .value {
@@ -886,9 +1005,6 @@ button.component.disabled {
 .alert.component > main {
   padding: 0 20px;
 }
-.alert.component > main > p {
-  word-break: break-all;
-}
 .error-alert.component > header > h1 {
   display: flex;
   align-items: center;
@@ -899,9 +1015,6 @@ button.component.disabled {
 }
 .error-alert.component > main {
   padding: 0 20px;
-}
-.error-alert.component > main > p {
-  word-break: break-all;
 }
 .confirm.component > header > h1 {
   display: flex;
@@ -914,9 +1027,6 @@ button.component.disabled {
 .confirm.component > main {
   padding: 0 20px;
 }
-.confirm.component > main > p {
-  word-break: break-all;
-}
 .prompt.component > header > h1 {
   display: flex;
   align-items: center;
@@ -927,9 +1037,6 @@ button.component.disabled {
 }
 .prompt.component > main {
   padding: 0 20px;
-}
-.prompt.component > main > p {
-  word-break: break-all;
 }
 .warning-message-box.component {
   display: flex;
