@@ -129,7 +129,7 @@ export default class HomeView extends StaticDomNode {
             "ul.titles",
             el(
               "li",
-              "Builder",
+              "Member",
               el("span.date", " (2024.01 ~ )"),
             ),
           ),
