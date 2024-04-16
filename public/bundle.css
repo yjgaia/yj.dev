@@ -870,6 +870,9 @@ button.component.disabled {
   gap: 8px;
   font-size: 12px;
 }
+.input.component > .label {
+  text-transform: capitalize;
+}
 .input.component > textarea,
 .input.component > input {
   font-size: var(--page-font-size);
@@ -882,6 +885,9 @@ button.component.disabled {
 .input.component > textarea:focus,
 .input.component > input:focus {
   border: 1px solid var(--primary-color);
+}
+.input.component > textarea {
+  height: 100px;
 }
 :root {
   --checkbox-border-color: var(--input-border-color);
