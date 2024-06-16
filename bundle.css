@@ -7,7 +7,7 @@
     Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
     - The "symbol *" part is to solve Firefox SVG sprite bug
  */
- *:where(:not(html, iframe, canvas, img, svg, video, audio, summary):not(svg *, symbol *)) {
+ *:where(:not(html, iframe, canvas, img, svg, video, audio, summary):not(svg *, symbol *, w3m-modal)) {
     all: unset;
     display: revert;
 }
@@ -104,27 +104,30 @@ meter {
   --placeholder-color: rgba(255, 255, 255, 0.5);
   --placeholder-bg-color: rgba(255, 255, 255, 0.1);
   --windows-scrollbar-color: rgba(128, 128, 128, 0.5);
+  --bold-weight: 500;
   --page-bg-color: #121212;
-  --title-text-color: #fff;
-  --paragraph-text-color: #b4c2d3;
+  --title-text-color: #f4f4f4;
+  --paragraph-text-color: #E7E9EA;
   --sub-text-color: #8e8e8e;
-  --page-font-size: 15px;
+  --page-font-family: 'Inter', sans-serif;
+  --page-font-size: 14px;
+  --paragraph-line-height: 1.42857em;
   --overlay-color: rgba(0, 0, 0, 0.5);
   --modal-bg-color: #1E1E1E;
 }
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Me5Q.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Roboto';
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAw.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
 }
 :root {
   width: 100%;
@@ -145,7 +148,7 @@ body {
   overflow: hidden;
   container-type: inline-size;
   color: var(--paragraph-text-color);
-  font-family: 'Roboto', sans-serif;
+  font-family: var(--page-font-family);
   font-size: var(--page-font-size);
 }
 h1,
@@ -157,7 +160,8 @@ h6 {
   color: var(--title-text-color);
 }
 p {
-  line-height: 1.4em;
+  line-height: var(--paragraph-line-height);
+  word-break: break-word;
 }
 a {
   cursor: pointer;
@@ -171,6 +175,11 @@ button {
 ::placeholder {
   color: var(--placeholder-color);
 }
+[contenteditable="true"]:empty::before {
+  content: attr(placeholder);
+  color: var(--placeholder-color);
+  cursor: text;
+}
 .clearfix::after {
   content: '';
   display: table;
@@ -181,8 +190,8 @@ button {
 }
 .avatar {
   flex-shrink: 0;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background-color: #252527;
   background-size: cover;
@@ -205,6 +214,38 @@ button {
 }
 .lazy-loading-component.hidden {
   display: none !important;
+}
+:root {
+  --snackbar-color: var(--page-bg-color);
+  --snackbar-line-color: var(--line-color);
+}
+.snackbar.component {
+  position: fixed;
+  left: 0;
+  bottom: 20px;
+  z-index: 999998;
+  width: 100%;
+}
+@container (width < 1280px) {
+  .snackbar.component {
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+.snackbar.component > main {
+  max-width: 532px;
+  width: 90%;
+  margin: auto;
+  background-color: var(--snackbar-color);
+  border: 1px solid var(--snackbar-line-color);
+  display: flex;
+  align-items: center;
+  border-radius: 24px;
+  padding: 5px;
+  padding-left: 25px;
+  gap: 8px;
+}
+.snackbar.component > main > p {
+  flex-grow: 1;
 }
 .splash-screen.component {
   position: fixed;
@@ -373,7 +414,6 @@ button.component.disabled {
   gap: 40px;
   padding: 0 10px;
   overflow-x: auto;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
 .tabs.component > ul::-webkit-scrollbar {
@@ -384,6 +424,7 @@ button.component.disabled {
   min-height: 48px;
   display: flex;
   align-items: center;
+  justify-content: center;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
   padding: 0 10px;
@@ -409,16 +450,14 @@ button.component.disabled {
   border-right: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   overflow-y: visible;
 }
-.bottom-menu-tabs.component::before,
-.bottom-menu-tabs.component::after {
-  content: '';
-  margin: 0 -4%;
-}
 .bottom-menu-tabs.component > .tab {
+  flex-grow: 1;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .bottom-menu-tabs.component > .tab > .icon {
   font-size: 30px;
@@ -434,8 +473,9 @@ button.component.disabled {
   left: 0;
   top: 0;
   z-index: 999990;
-  width: 90px;
+  width: 72px;
   height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -448,8 +488,8 @@ button.component.disabled {
     top: auto;
     bottom: 0;
     width: 100%;
-    height: calc(60px + env(safe-area-inset-bottom));
-    padding-bottom: calc(2px + env(safe-area-inset-bottom));
+    height: calc(50px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
     flex-direction: row;
     gap: 0;
     border-top: 1px solid var(--line-color);
@@ -464,25 +504,23 @@ button.component.disabled {
   cursor: pointer;
 }
 .app-nav-bar.component > h1.logo > img {
-  max-width: 55px;
+  max-width: 36px;
+  max-height: 36px;
 }
 .app-nav-bar.component > ul {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  padding-bottom: 21px;
 }
 @container (width < 1280px) {
   .app-nav-bar.component > ul {
     flex-grow: 1;
     flex-direction: row;
-    justify-content: space-between;
     gap: 0;
-  }
-  .app-nav-bar.component > ul::before,
-  .app-nav-bar.component > ul::after {
-    content: '';
-    margin: 0 -1%;
+    padding-bottom: 0;
   }
 }
 .app-nav-bar.component > ul > .app-nav-bar-menu {
@@ -490,13 +528,19 @@ button.component.disabled {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
   cursor: pointer;
 }
 @container (width < 1280px) {
   .app-nav-bar.component > ul > .app-nav-bar-menu {
-    gap: 2px;
-    font-size: 11px;
+    flex-grow: 1;
+  }
+}
+.app-nav-bar.component > ul > .app-nav-bar-menu.to-footer {
+  margin-top: auto;
+}
+@container (width < 1280px) {
+  .app-nav-bar.component > ul > .app-nav-bar-menu.to-footer {
+    margin-top: 0;
   }
 }
 .app-nav-bar.component > ul > .app-nav-bar-menu > img {
@@ -504,6 +548,23 @@ button.component.disabled {
 }
 .app-nav-bar.component > ul > .app-nav-bar-menu > .icon {
   font-size: 30px;
+}
+.app-nav-bar.component > ul > .app-nav-bar-menu > .title {
+  font-size: 12px;
+}
+@container (width < 1280px) {
+  .app-nav-bar.component > ul > .app-nav-bar-menu {
+    gap: 0;
+  }
+  .app-nav-bar.component > ul > .app-nav-bar-menu > img {
+    height: 28px;
+  }
+  .app-nav-bar.component > ul > .app-nav-bar-menu > .icon {
+    font-size: 28px;
+  }
+  .app-nav-bar.component > ul > .app-nav-bar-menu > .title {
+    display: none;
+  }
 }
 .app-nav-bar.component > ul > .app-nav-bar-menu.active {
   color: var(--primary-color);
@@ -587,6 +648,17 @@ button.component.disabled {
   background-color: var(--list-loading-bar-color);
   animation: list-loading-bar-loading 2s linear infinite;
 }
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+@container (width < 1280px) {
+  .loading-overlay {
+    font-size: 18px;
+  }
+}
 .exitable {
   position: fixed;
   left: 0;
@@ -653,6 +725,78 @@ button.component.disabled {
 }
 .popup.component > footer:empty {
   display: none;
+}
+@keyframes show-side-panel {
+  from {
+    opacity: 0;
+    right: -40px;
+  }
+  to {
+    opacity: 1;
+    right: 0;
+  }
+}
+@keyframes hide-side-panel {
+  from {
+    opacity: 1;
+    right: 0;
+  }
+  to {
+    opacity: 0;
+    right: -40px;
+  }
+}
+@keyframes show-left-side-panel {
+  from {
+    opacity: 0;
+    left: -40px;
+  }
+  to {
+    opacity: 1;
+    left: 0;
+  }
+}
+@keyframes hide-left-side-panel {
+  from {
+    opacity: 1;
+    left: 0;
+  }
+  to {
+    opacity: 0;
+    left: -40px;
+  }
+}
+.side-panel.component {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  max-width: 360px;
+  height: 100%;
+  border-left: 1px solid var(--line-color);
+  background-color: var(--modal-bg-color);
+  overflow-y: auto;
+  padding-bottom: 120px;
+  container-type: inline-size;
+  animation: show-side-panel 0.3s ease-out;
+}
+.side-panel.component.to-left {
+  right: auto;
+  left: 0;
+  border-left: none;
+  border-right: 1px solid var(--line-color);
+  animation: show-left-side-panel 0.3s ease-out;
+}
+@container (width < 1280px) {
+  .side-panel.component {
+    width: 80%;
+  }
+}
+.side-panel.component.hide {
+  animation: hide-side-panel 0.3s ease-out forwards;
+}
+.side-panel.component.hide.to-left {
+  animation: hide-left-side-panel 0.3s ease-out forwards;
 }
 @keyframes show-drawer {
   from {
@@ -854,9 +998,16 @@ button.component.disabled {
   justify-content: flex-end;
   padding: 0 12px;
   border-top: 1px solid var(--line-color);
+  gap: 12px;
 }
 @container (width < 1280px) {
-  .adaptive-modal.component > footer {
+  .adaptive-modal.component > footer:has(>button.primary) > button.cancel {
+    display: none;
+  }
+  .adaptive-modal.component > footer:has(>button.primary) > button.primary {
+    flex-grow: 1;
+  }
+  .adaptive-modal.component > footer:not(:has(>button.primary)) {
     display: none;
   }
 }
@@ -873,6 +1024,13 @@ button.component.disabled {
 .input.component > .label {
   text-transform: capitalize;
 }
+.input.component > .label:empty {
+  display: none;
+}
+.input.component.required > .label::after {
+  content: '*';
+  margin-left: 2px;
+}
 .input.component > textarea,
 .input.component > input {
   font-size: var(--page-font-size);
@@ -888,6 +1046,71 @@ button.component.disabled {
 }
 .input.component > textarea {
   height: 100px;
+}
+.dynamic-list-input.component {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dynamic-list-input.component > .label {
+  text-transform: capitalize;
+  font-size: 12px;
+}
+.dynamic-list-input.component > table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid var(--line-color);
+}
+.dynamic-list-input.component > table thead > tr > th {
+  color: var(--title-text-color);
+  font-size: 12px;
+}
+.dynamic-list-input.component > table thead > tr > th.required::after {
+  content: '*';
+  margin-left: 2px;
+}
+.dynamic-list-input.component > table tr > th {
+  padding: 8px 10px;
+  border: 1px solid var(--line-color);
+  font-weight: var(--bold-weight);
+  vertical-align: middle;
+}
+.dynamic-list-input.component > table tr > td {
+  padding: 8px 10px;
+  border: 1px solid var(--line-color);
+  vertical-align: middle;
+}
+.dynamic-list-input.component > table tr > td.up-down-buttons > .button-container {
+  display: flex;
+}
+@container (width < 520px) {
+  .dynamic-list-input.component > table .up-down-buttons {
+    display: none;
+  }
+}
+.quantity-input.component {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  align-items: flex-start;
+}
+.quantity-input.component > .label {
+  text-transform: capitalize;
+}
+.quantity-input.component > main {
+  display: flex;
+  border: 1px solid var(--input-border-color);
+  border-radius: 20px;
+}
+.quantity-input.component > main > input {
+  font-size: var(--page-font-size);
+  background-color: var(--input-bg-color);
+  padding: 0 12px;
+}
+.quantity-input.component > main > input:focus {
+  border: 1px solid var(--primary-color);
 }
 :root {
   --checkbox-border-color: var(--input-border-color);
@@ -946,11 +1169,23 @@ button.component.disabled {
 }
 .rich-display.component > .image-container {
   position: relative;
+  display: flex;
+}
+.rich-display.component > .image-container.loading {
+  min-width: 64px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--overlay-color);
+  border-radius: 12px;
 }
 .rich-display.component > .image-container > a {
   cursor: pointer;
+  display: flex;
 }
 .rich-display.component > .image-container > a > img {
+  border: 1px solid var(--line-color);
   border-radius: 12px;
   max-height: 320px;
   object-fit: cover;
@@ -963,7 +1198,7 @@ button.component.disabled {
   overflow: hidden;
   max-height: 320px;
 }
-.rich-display.component > .image-container > .loading-spinner {
+.rich-display.component > .image-container > a > .loading-spinner {
   position: absolute;
   left: 0;
   top: 0;
@@ -972,7 +1207,7 @@ button.component.disabled {
   background-color: var(--overlay-color);
   border-radius: 12px;
 }
-.rich-display.component > .image-container > .loading-spinner:after {
+.rich-display.component > .image-container > a > .loading-spinner:after {
   position: absolute;
   top: calc(50% - 12px);
   left: calc(50% - 12px);
@@ -982,7 +1217,7 @@ button.component.disabled {
   align-items: center;
   gap: 10px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   text-transform: capitalize;
 }
 .alert.component > main {
@@ -993,7 +1228,7 @@ button.component.disabled {
   align-items: center;
   gap: 10px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   text-transform: capitalize;
 }
 .error-alert.component > main {
@@ -1004,7 +1239,7 @@ button.component.disabled {
   align-items: center;
   gap: 10px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   text-transform: capitalize;
 }
 .confirm.component > main {
@@ -1015,7 +1250,7 @@ button.component.disabled {
   align-items: center;
   gap: 10px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   text-transform: capitalize;
 }
 .prompt.component > main {
@@ -1039,11 +1274,16 @@ button.component.disabled {
 .info-message-box.component > i {
   font-size: 24px;
 }
-.info-message-box.component > p > a {
+.info-message-box.component > main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.info-message-box.component > main > p > a {
   text-decoration: underline;
 }
-.info-message-box.component > p > b {
-  font-weight: bold;
+.info-message-box.component > main > p > b {
+  font-weight: var(--bold-weight);
 }
 :root {
   --warning-message-color: #FFA500;
@@ -1064,7 +1304,24 @@ button.component.disabled {
   text-decoration: underline;
 }
 .warning-message-box.component > p > b {
-  font-weight: bold;
+  font-weight: var(--bold-weight);
+}
+.exit-android-app-popup.component > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: var(--bold-weight);
+  text-transform: capitalize;
+}
+.exit-android-app-popup.component > main {
+  padding: 0 20px;
+}
+.youtube-video-display > iframe {
+  width: 100%;
+  height: 200px;
+  max-width: 400px;
+  border-radius: 16px;
 }
 .x-account-email-required-popup > header {
   padding: 0 12px !important;
@@ -1076,7 +1333,7 @@ button.component.disabled {
   align-items: center;
   gap: 10px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   line-height: 1.5em;
 }
 @container (width < 1280px) {
