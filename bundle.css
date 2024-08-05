@@ -124,14 +124,14 @@ meter {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf) format('truetype');
 }
 :root {
   width: 100%;
@@ -510,6 +510,9 @@ button.component.disabled {
 .app-nav-bar.component > h1.logo > img {
   max-width: 36px;
   max-height: 36px;
+}
+.app-nav-bar.component:not(:has(h1)) > ul {
+  padding-top: 21px;
 }
 .app-nav-bar.component > ul {
   flex-grow: 1;
@@ -1165,6 +1168,57 @@ button.component.disabled {
 .checkbox.component > label {
   cursor: default;
 }
+.switch.component {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  /* Rounded sliders */
+}
+.switch.component > input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch.component > .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.switch.component > .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.switch.component input:checked + .slider {
+  background-color: #2196F3;
+}
+.switch.component input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+.switch.component input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.switch.component .slider {
+  border-radius: 34px;
+}
+.switch.component .slider:before {
+  border-radius: 50%;
+}
 .file-drop-area.component.highlight {
   outline: 2px dotted var(--primary-color);
 }
@@ -1326,6 +1380,32 @@ button.component.disabled {
   height: 200px;
   max-width: 400px;
   border-radius: 16px;
+}
+.file-tree.hidden {
+  display: none;
+}
+.file-tree-node > main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+@media (pointer: fine) {
+  .file-tree-node > main:hover:not(.disabled) {
+    background-color: var(--button-hover-color);
+  }
+}
+.file-tree-node > main:active:not(.disabled) {
+  background-color: var(--button-hover-color);
+}
+.file-tree-node > main > button {
+  width: 32px;
+  height: 32px;
+}
+.file-tree-node > .file-tree {
+  margin-left: 36px;
 }
 .x-account-email-required-popup > header {
   padding: 0 12px !important;
