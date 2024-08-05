@@ -40,11 +40,12 @@ export default class HomeView extends StaticDomNode {
               href: "https://gaiaprotocol.com",
               target: "_blank",
             }),
+            " Development Group",
           ),
-          el("p", "Web3 Social Protocol"),
+          el("p", "Web3 Social/Gaming Protocol"),
           el(
             "ul.titles",
-            el("li", "Builder", el("span.date", " (2022.02 ~ )")),
+            el("li", "Member", el("span.date", " (2022.02 ~ )")),
           ),
         ),
         el(
@@ -64,7 +65,11 @@ export default class HomeView extends StaticDomNode {
               "Software Engineer & Community Manager",
               el("span.date", " (2021.07 ~ 2022.02)"),
             ),
-            el("li", "Technical Advisor", el("span.date", " (2022.02 ~ 2023.11)")),
+            el(
+              "li",
+              "Technical Advisor",
+              el("span.date", " (2022.02 ~ 2023.11)"),
+            ),
           ),
         ),
         el(
