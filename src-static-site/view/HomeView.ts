@@ -45,7 +45,7 @@ export default class HomeView extends StaticDomNode {
           el("p", "Web3 Social/Gaming Protocol"),
           el(
             "ul.titles",
-            el("li", "Member", el("span.date", " (2022.02 ~ )")),
+            el("li", "Lead", el("span.date", " (2022.02 ~ )")),
           ),
         ),
         el(
